@@ -4,7 +4,7 @@
   <img src="./public/LUXCinema.png" width="550" />
 </p>
  
-<p align="center">Result Command Bot.</p>
+<p align="center">Logo.</p>
 
 ## Installation For Window/VPS
 Running Program
