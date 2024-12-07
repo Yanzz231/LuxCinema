@@ -6,7 +6,7 @@
  
 <p align="center">Result Command Bot.</p>
 
-## Installation For Window/RDP
+## Installation For Window
 Running Program
 ```bash
 npm install
