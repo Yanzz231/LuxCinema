@@ -3,7 +3,7 @@ import axios from 'axios';
 const token = localStorage.getItem('token');
 
 const apiAuth = axios.create({
-    baseURL: `${process.env.REACT_APP_PANEL_WEBSITE}/api`,
+    baseURL: `${process.env.REACT_APP_BACKEND_WEBSITE}/api`,
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',

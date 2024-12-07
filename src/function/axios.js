@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const apiJson = axios.create({
-    baseURL: `http://127.0.0.1:8000/api`,
+    baseURL: `${process.env.REACT_APP_BACKEND_WEBSITE}/api`,
     timeout: 10000,
+    mode: "cors",
     headers: {
         'Content-Type': 'application/json',
     }

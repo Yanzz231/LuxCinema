@@ -2,9 +2,9 @@ import React, {useState, useEffect, useCallback} from "react";
 import {useParams} from "react-router-dom";
 
 // HELPER
-import check_token from "../../../../function/function";
-import apiJson from "../../../../function/axios";
-import {checkButton, textPopUp} from "../../../../function/swal";
+import check_token from "../../../function/function";
+import apiJson from "../../../function/axios";
+import {checkButton, textPopUp} from "../../../function/swal";
 
 
 const rows = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
@@ -46,7 +46,7 @@ const SeatBooking = () => {
             getData()
             const getToken = localStorage.getItem("token")
             check_token(getToken).then(res => {
-                if (res === false) return window.location.href = `/film/${id}/theatre`
+                if (res === false) return window.location.href = `/film/${id}`
                 setToken(res)
             })
             setLoop(false)
@@ -64,7 +64,7 @@ const SeatBooking = () => {
     const handleConfirmOrder = (e) => {
         e.preventDefault()
         if (selectedSeats.length > 0) {
-            checkButton("Are you sure?", "Check again your seat", "success").then(async (res) => {
+            checkButton("Are you sure?", "Recheck your seat before payment", "success").then(async (res) => {
                 if (res.status) {
                     const response = await apiJson.post(`/transction/create`, {
                         username: localStorage.getItem("username"),
@@ -72,13 +72,14 @@ const SeatBooking = () => {
                         theatre: data[0].theater.name,
                         data_seat: selectedSeats,
                         seat_id: parseInt(seat_id),
-                        film_id: parseInt(id),
+                        film: data[0]?.film?.title,
+                        time: data[0]?.time,
                         user_id: parseInt(localStorage.getItem("id")),
                         total_price: data[0]?.theater.price * selectedSeats.length,
                         quantity: selectedSeats.length,
-                        price: data[0]?.theater.price
+                        price: data[0]?.theater.price,
+                        phone: localStorage.getItem("phone")
                     })
-                    console.log(response?.data?.data)
 
                     setSelectedSeats([])
                     window.location.href = response?.data?.data?.redirect_url;
@@ -99,7 +100,7 @@ const SeatBooking = () => {
             <button
                 key={seat}
                 onClick={() => toggleSeatSelection(seat)}
-                disabled={bookedSeats.includes(seat)}
+                disabled={bookedSeats.includes(seat) || onBookingSeats.includes(seat)}
                 className={`${bgColor} hover:bg-opacity-90 flex items-center justify-center text-xs sm:text-sm font-semibold text-white w-8 h-8 sm:w-12 sm:h-12 m-1 rounded-md shadow-md transform hover:scale-105 transition-all duration-200`}
             >
                 {seat}
@@ -120,7 +121,8 @@ const SeatBooking = () => {
                 <h1 className="text-xl sm:text-3xl font-bold">{data[0]?.film?.title}</h1>
                 <p className="mt-2 text-sm sm:text-lg text-gray-300">
                     Cinema: {data[0]?.theater.name} <br/>
-                    Date: {formattedDate} | {data[0]?.time}
+                    Date: {formattedDate} | {data[0]?.time}<br/>
+                    Price: Rp {data[0]?.theater.price.toLocaleString()} / Seat
                 </p>
             </header>
 
@@ -156,6 +158,10 @@ const SeatBooking = () => {
                     <div className="bg-gray-400 w-5 h-5 sm:w-6 sm:h-6 mr-2 rounded-md"></div>
                     <p>Sold</p>
                 </div>
+            </div>
+
+            <div className="mt-8 flex gap-4">
+                <h2>Total Pembelian: Rp {(data[0]?.theater.price * selectedSeats.length).toLocaleString()}</h2>
             </div>
 
             <div className="mt-8 flex gap-4">
