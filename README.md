@@ -10,29 +10,25 @@
 Running Program
 ```bash
 npm install
-node .
+npm start
 ```
 
-Check config.json
+Check .env
 ```bash
-{
-    "token": "YOUR_TOKEN_BOT",
-    "id": "YOUR_APPLICATION_ID"
-}
+REACT_APP_BACKEND_WEBSITE=http://localhost:4000
+REACT_APP_PANEL_WEBSITE=http://localhost:8000
 ```
 
 ## Disclaimer
-There are so many unfinished fiture 
-- Skip
-- stop / pause
-
-This bot have a many fiture nsfw 
-- Music Fiture ( play, queue )
-- hentai
-- bdsm
-- gifs
-- maid
-- ( atc )
+This website have a many fiture 
+- Detail Film
+- Seat 
+- Payment Gateway ( Midtrans )
+- Login
+- Register
+- Change Password
+- OTP Send
+- etc.
 
 ## License
 
